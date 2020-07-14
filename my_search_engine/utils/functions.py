@@ -3,6 +3,8 @@ import spacy
 
 nlp = spacy.load('en_core_web_lg')
 
+custom_stop_words = ['ax', 'wa', 'ha', 'thi', 'hi']
+
 
 def preprocess_text(text):
 
@@ -26,7 +28,7 @@ def clean_text(text):
     text = re.sub('\r?\n|\r', ' ', text)
 
     # Remove Trademarks, Copyright, and Registered
-    text = re.sub('(™|®|©|&trade;|&reg;|&copy;|&#8482;|&#174;|&#169;)', ' ', text)
+    text = re.sub('(™|®|©|&trade;|&reg;|&copy;|&#8482;|&#174;|&#169;)', '', text)
 
     return text
 
@@ -37,8 +39,6 @@ def remove_custom_stopwords(text):
     :param text:
     :return:
     """
-
-    custom_stop_words = ['ax', 'wa', 'ha', 'thi', 'hi']
 
     tokens = spacy_tokenization(text)
 
@@ -59,6 +59,7 @@ def spacy_tokenization(text):
     tokens = []
 
     for token in doc:
-        tokens.append(token.text_)
+        if not token.is_punct:
+            tokens.append(token.text)
 
     return tokens
