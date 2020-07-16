@@ -1,3 +1,0 @@
-"""
-Vectorizing preprocessed data
-"""
