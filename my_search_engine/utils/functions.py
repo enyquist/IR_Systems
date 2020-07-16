@@ -1,4 +1,6 @@
 import re
+
+import numpy as np
 import spacy
 
 nlp = spacy.load('en_core_web_lg')
@@ -63,3 +65,27 @@ def spacy_tokenization(text):
             tokens.append(token.text)
 
     return tokens
+
+
+def spacy_embedding(iterable_of_text, nlp=nlp):
+    """
+    Embed text with SpaCy
+    :param iterable_of_text:
+    :param nlp: SpaCy Model, default to en_core_web_lg
+    :return: Mapped vectors from SpaCy simplex
+    """
+
+    counter = 0
+    embeddings = []
+
+    for iterable in iterable_of_text:
+        embeddings.append(nlp(iterable).vector)
+
+        counter += 1
+
+        if counter % 100 == 0:
+            print(counter)
+
+    result = np.stack(embeddings, axis=0)
+
+    return result

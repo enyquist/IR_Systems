@@ -40,3 +40,8 @@ class Test(TestCase):
     def test_preprocess_text(self):
         self.assertEqual(functions.preprocess_text(text='Hello World!'), 'hello world')
         self.assertEqual(functions.preprocess_text(text=' '.join(functions.custom_stop_words)), '')
+
+    def test_spacy_embedding(self):
+        iterable_of_text = ['Single Text']
+        self.assertEqual(len(functions.spacy_embedding(iterable_of_text)), 1)
+
